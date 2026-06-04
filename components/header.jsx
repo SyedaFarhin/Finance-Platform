@@ -4,33 +4,30 @@ import { PenBox, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { checkUser } from "@/lib/checkUser";
-import Image from "next/image";
+import Logo from "@/components/logo";
 
 const Header = async () => {
   await checkUser();
 
   return (
-    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
-      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/">
-          <Image
-            src={"/logo.png"}
-            alt="Welth Logo"
-            width={200}
-            height={60}
-            className="h-12 w-auto object-contain"
-          />
+    <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-200">
+      <nav className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <Logo width={36} height={36} />
+          <span className="font-bold text-xl bg-gradient-to-r from-sky-700 to-emerald-600 bg-clip-text text-transparent hidden sm:inline">
+            FinFlow
+          </span>
         </Link>
 
         {/* Navigation Links - Different for signed in/out users */}
         <div className="hidden md:flex items-center space-x-8">
           <SignedOut>
-            <a href="#features" className="text-gray-600 hover:text-blue-600">
+            <a href="#features" className="text-slate-600 hover:text-sky-700 font-medium transition-colors">
               Features
             </a>
             <a
               href="#testimonials"
-              className="text-gray-600 hover:text-blue-600"
+              className="text-slate-600 hover:text-sky-700 font-medium transition-colors"
             >
               Testimonials
             </a>
@@ -38,19 +35,19 @@ const Header = async () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3">
           <SignedIn>
             <Link
               href="/dashboard"
-              className="text-gray-600 hover:text-blue-600 flex items-center gap-2"
+              className="text-slate-600 hover:text-sky-700 flex items-center gap-2"
             >
-              <Button variant="outline">
+              <Button variant="ghost" className="hover:bg-sky-50">
                 <LayoutDashboard size={18} />
                 <span className="hidden md:inline">Dashboard</span>
               </Button>
             </Link>
             <a href="/transaction/create">
-              <Button className="flex items-center gap-2">
+              <Button className="flex items-center gap-2 bg-gradient-to-r from-sky-700 to-emerald-600 hover:from-sky-800 hover:to-emerald-700">
                 <PenBox size={18} />
                 <span className="hidden md:inline">Add Transaction</span>
               </Button>
@@ -58,14 +55,14 @@ const Header = async () => {
           </SignedIn>
           <SignedOut>
             <SignInButton forceRedirectUrl="/dashboard">
-              <Button variant="outline">Login</Button>
+              <Button variant="outline" className="border-slate-300 hover:border-sky-700">Login</Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10",
+                  avatarBox: "w-9 h-9",
                 },
               }}
             />

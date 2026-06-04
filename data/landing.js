@@ -30,58 +30,58 @@ export const statsData = [
 // Features Data
 export const featuresData = [
   {
-    icon: <BarChart3 className="h-8 w-8 text-blue-600" />,
+    icon: <BarChart3 className="h-8 w-8" />,
     title: "Advanced Analytics",
     description:
-      "Get detailed insights into your spending patterns with AI-powered analytics",
+      "Get detailed insights into your spending patterns with AI-powered analytics and comprehensive reports.",
   },
   {
-    icon: <Receipt className="h-8 w-8 text-blue-600" />,
+    icon: <Receipt className="h-8 w-8" />,
     title: "Smart Receipt Scanner",
     description:
-      "Extract data automatically from receipts using advanced AI technology",
+      "Extract data automatically from receipts using advanced AI technology. No more manual entry.",
   },
   {
-    icon: <PieChart className="h-8 w-8 text-blue-600" />,
+    icon: <PieChart className="h-8 w-8" />,
     title: "Budget Planning",
-    description: "Create and manage budgets with intelligent recommendations",
+    description: "Create and manage budgets with intelligent recommendations tailored to your habits.",
   },
   {
-    icon: <CreditCard className="h-8 w-8 text-blue-600" />,
+    icon: <CreditCard className="h-8 w-8" />,
     title: "Multi-Account Support",
-    description: "Manage multiple accounts and credit cards in one place",
+    description: "Manage multiple accounts and credit cards seamlessly in one unified dashboard.",
   },
   {
-    icon: <Globe className="h-8 w-8 text-blue-600" />,
+    icon: <Globe className="h-8 w-8" />,
     title: "Multi-Currency",
-    description: "Support for multiple currencies with real-time conversion",
+    description: "Support for multiple currencies with real-time conversion rates and global access.",
   },
   {
-    icon: <Zap className="h-8 w-8 text-blue-600" />,
+    icon: <Zap className="h-8 w-8" />,
     title: "Automated Insights",
-    description: "Get automated financial insights and recommendations",
+    description: "Get automated financial insights and personalized recommendations every month.",
   },
 ];
 
 // How It Works Data
 export const howItWorksData = [
   {
-    icon: <CreditCard className="h-8 w-8 text-blue-600" />,
+    icon: <CreditCard className="h-8 w-8" />,
     title: "1. Create Your Account",
     description:
-      "Get started in minutes with our simple and secure sign-up process",
+      "Get started in minutes with our simple and secure sign-up process. No credit card required.",
   },
   {
-    icon: <BarChart3 className="h-8 w-8 text-blue-600" />,
+    icon: <BarChart3 className="h-8 w-8" />,
     title: "2. Track Your Spending",
     description:
-      "Automatically categorize and track your transactions in real-time",
+      "Automatically categorize and track your transactions in real-time with smart categorization.",
   },
   {
-    icon: <PieChart className="h-8 w-8 text-blue-600" />,
+    icon: <PieChart className="h-8 w-8" />,
     title: "3. Get Insights",
     description:
-      "Receive AI-powered insights and recommendations to optimize your finances",
+      "Receive AI-powered insights and recommendations to optimize your finances and save more.",
   },
 ];
 
@@ -92,7 +92,7 @@ export const testimonialsData = [
     role: "Small Business Owner",
     image: "https://randomuser.me/api/portraits/women/75.jpg",
     quote:
-      "Welth has transformed how I manage my business finances. The AI insights have helped me identify cost-saving opportunities I never knew existed.",
+      "FinFlow has transformed how I manage my business finances. The AI insights have helped me identify cost-saving opportunities I never knew existed.",
   },
   {
     name: "Michael Chen",
@@ -106,6 +106,6 @@ export const testimonialsData = [
     role: "Financial Advisor",
     image: "https://randomuser.me/api/portraits/women/74.jpg",
     quote:
-      "I recommend Welth to all my clients. The multi-currency support and detailed analytics make it perfect for international investors.",
+      "I recommend FinFlow to all my clients. The multi-currency support and detailed analytics make it perfect for international investors.",
   },
 ];
