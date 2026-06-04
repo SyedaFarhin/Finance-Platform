@@ -115,7 +115,9 @@ const LandingPage = () => {
                       <span key={i} className="text-yellow-400">★</span>
                     ))}
                   </div>
-                  <p className="text-slate-600 italic">"{testimonial.quote}"</p>
+                <p className="text-slate-600 italic">
+  &quot;{testimonial.quote}&quot;
+</p>
                 </CardContent>
               </Card>
             ))}
