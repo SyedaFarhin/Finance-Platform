@@ -4,8 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import aj from "@/lib/arcjet";
-import { request } from "@arcjet/next";
+
+// ArcJet is imported dynamically inside handlers to avoid initializing it during RSC render (missing env vars on Vercel can break builds).
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -20,7 +20,11 @@ export async function createTransaction(data) {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Get request data for ArcJet
+    // Dynamically import ArcJet and request to avoid initializing ArcJet at module load time
+    const [{ default: aj }, { request }] = await Promise.all([
+      import("@/lib/arcjet"),
+      import("@arcjet/next"),
+    ]);
     const req = await request();
 
     // Check rate limit

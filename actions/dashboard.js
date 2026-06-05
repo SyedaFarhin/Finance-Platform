@@ -1,10 +1,9 @@
 "use server";
 
-import aj from "@/lib/arcjet";
 import { db } from "@/lib/prisma";
-import { request } from "@arcjet/next";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
+// ArcJet is imported dynamically inside handlers to avoid initializing it during RSC render (missing env vars on Vercel can break builds).
 
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
@@ -56,7 +55,11 @@ export async function createAccount(data) {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Get request data for ArcJet
+    // Dynamically import ArcJet and request to avoid initializing ArcJet at module load time
+    const [{ default: aj }, { request }] = await Promise.all([
+      import("@/lib/arcjet"),
+      import("@arcjet/next"),
+    ]);
     const req = await request();
 
     // Check rate limit
