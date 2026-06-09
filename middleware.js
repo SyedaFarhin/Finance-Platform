@@ -1,4 +1,3 @@
-import arcjet, { createMiddleware, detectBot, shield } from "@arcjet/next";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -8,40 +7,39 @@ const isProtectedRoute = createRouteMatcher([
   "/transaction(.*)",
 ]);
 
-// Create Arcjet middleware
-const aj = arcjet({
-  key: process.env.ARCJET_KEY,
-  // characteristics: ["userId"], // Track based on Clerk userId
-  rules: [
-    // Shield protection for content and security
-    shield({
-      mode: "LIVE",
-    }),
-    detectBot({
-      mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
-      allow: [
-        "CATEGORY:SEARCH_ENGINE", // Google, Bing, etc
-        "GO_HTTP", // For Inngest
-        // See the full list at https://arcjet.com/bot-list
-      ],
-    }),
-  ],
-});
+// Middleware entrypoint: dynamically import ArcJet at request-time so the
+// ArcJet WASM/runtime isn't bundled into Server Component builds.
+export async function middleware(req, ev) {
+  const { default: arcjet, createMiddleware, detectBot, shield } = await import(
+    "@arcjet/next"
+  );
 
-// Create base Clerk middleware
-const clerk = clerkMiddleware(async (auth, req) => {
-  const { userId } = await auth();
+  const aj = arcjet({
+    key: process.env.ARCJET_KEY,
+    rules: [
+      shield({ mode: "LIVE" }),
+      detectBot({
+        mode: "LIVE",
+        allow: ["CATEGORY:SEARCH_ENGINE", "GO_HTTP"],
+      }),
+    ],
+  });
 
-  if (!userId && isProtectedRoute(req)) {
-    const { redirectToSignIn } = await auth();
-    return redirectToSignIn();
-  }
+  // Create base Clerk middleware (kept simple and identical to previous behavior)
+  const clerk = clerkMiddleware(async (auth, req2) => {
+    const { userId } = await auth();
 
-  return NextResponse.next();
-});
+    if (!userId && isProtectedRoute(req2)) {
+      const { redirectToSignIn } = await auth();
+      return redirectToSignIn();
+    }
 
-// Chain middlewares - ArcJet runs first, then Clerk
-export default createMiddleware(aj, clerk);
+    return NextResponse.next();
+  });
+
+  const chained = createMiddleware(aj, clerk);
+  return chained(req, ev);
+}
 
 export const config = {
   matcher: [
